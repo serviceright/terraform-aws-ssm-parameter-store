@@ -21,4 +21,12 @@ resource "aws_ssm_parameter" "default" {
   overwrite       = each.value.overwrite
   allowed_pattern = each.value.allowed_pattern
   tags            = var.tags
+  
+   lifecycle {
+    ignore_changes = [
+      # Ignore changes to tags, e.g. because a management agent
+      # updates these based on some ruleset managed elsewhere.
+      value
+    ]
+  }
 }
